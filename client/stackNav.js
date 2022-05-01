@@ -5,7 +5,7 @@ import Signup from './src/signup/signup'
 
 const stack = createStackNavigator({
   Signin: Signin,
-  Signup: Signup
+  Signup: Signup,
 },
 {
   defaultNavigationOptions: {
