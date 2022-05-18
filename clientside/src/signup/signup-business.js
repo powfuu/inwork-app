@@ -106,14 +106,18 @@ return(
                         setIconfirmPassword('#23ff3e')
                     }}
                 />
-             <e.FormSubmit disabled={regStatus} onPress={signup}>
+             <e.FormSubmit mtop="35" disabled={regStatus} onPress={signup}>
                 <e.FormSubmitText>Register Business</e.FormSubmitText>
             </e.FormSubmit>
             </e.Form>
             </e.FormGeneral>
             <e.Footer>
-                <e.FooterItem>Terms & Conditions</e.FooterItem>
-                <e.FooterItem>Official Website</e.FooterItem>
+                <e.FooterItem onPress={()=>{
+                Linking.openURL('http://www.google.com/');
+                }}>Terms & Conditions</e.FooterItem>
+                <e.FooterItem onPress={()=>{
+                Linking.openURL('http://www.google.com/');
+                }}>Official Website</e.FooterItem>
             </e.Footer>
     </MainView>
 );

@@ -26,8 +26,12 @@ return(
         </e.SelectBox>
         </e.ChoiceType>
             <e.Footer>
-                <e.FooterItem>Terms & Conditions</e.FooterItem>
-                <e.FooterItem>Official Website</e.FooterItem>
+                <e.FooterItem onPress={()=>{
+                Linking.openURL('http://www.google.com/');
+                }}>Terms & Conditions</e.FooterItem>
+                <e.FooterItem onPress={()=>{
+                Linking.openURL('http://www.google.com/');
+                }}>Official Website</e.FooterItem>
             </e.Footer>
     </MainView>
 );

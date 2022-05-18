@@ -95,7 +95,7 @@ color:#20E15D;
 `
 export const FormSubmit = styled(TouchableHighlight)`
 background-color: #24252A;
-margin-top:35px;
+margin-top: ${props => props.mtop}px;
 padding-left:18px; padding-right:18px;
 padding-top:9px; padding-bottom: 9px;
 border-radius:100px;
