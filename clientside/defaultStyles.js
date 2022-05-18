@@ -5,6 +5,10 @@ export const MainView = styled(SafeAreaView)`
 height: 100%;
 background:white;
 `
+export const MainViewApp = styled(SafeAreaView)` 
+height: 100%;
+background:rgb(247,247,247);
+`
 export const Inwork = styled(Text)` 
 color:#23ff3e;
 `

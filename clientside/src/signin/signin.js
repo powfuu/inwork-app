@@ -9,9 +9,8 @@ import forgotpasswordobject from "../../resources/forgotpassword.png"
 import { Alert,Linking, NativeModules } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HOST } from '@env'
-    
 
-export default function Signin({ navigation }) {
+export default function Signin({navigation}) {
 
     const [Iemail, setIemail] = useState('rgb(230,230,230)')
     const [Ipassword, setIpassword] = useState('rgb(230,230,230)')
@@ -54,7 +53,7 @@ export default function Signin({ navigation }) {
     const getToken = async()=>{
         if(await AsyncStorage.getItem('@app:token') != null){
         setHttpToken(await AsyncStorage.getItem('@app:token'))
-        navigation.navigate('Dashboard')
+        navigation.navigate('LoggedNavigator')
         }else if(await AsyncStorage.getItem('@app:token') === null){
             setHttpToken('EXPIRED_TOKEN')
         }
@@ -79,7 +78,7 @@ const Signin = () =>{
                   );
             }else if(req.data.token){
                 await AsyncStorage.setItem('@app:token',req.data.token)
-                NativeModules.DevSettings.reload()
+                navigation.navigate('LoggedNavigator')
             }
         })
     }

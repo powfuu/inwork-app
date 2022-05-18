@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { Text,Alert,Button,BackHandler,NativeModules } from 'react-native'
+import { BackHandler,NativeModules } from 'react-native'
 import * as e from './dashboardComponents'
-import { MainView } from '../../defaultStyles';
+import { MainViewApp } from '../../defaultStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 export default function Dashboard({navigation}){
     const rmToken = async()=>{
@@ -17,9 +17,8 @@ export default function Dashboard({navigation}){
         });
 }, []);
 return(
-    <MainView>
-        <Button onPress={getToken} title='Token?'/>
-    <Text>Dashboard</Text>
-    </MainView>
+    <MainViewApp>
+
+    </MainViewApp>
 );
 }
