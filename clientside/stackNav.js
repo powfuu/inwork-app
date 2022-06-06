@@ -1,12 +1,13 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
-import Chat from './src/chat/chat'
-import Explore from './src/explore/explore'
-import Notifications from './src/notifications/notifications'
-import Menu from './src/menu/menu'
-import Dashboard from "./src/dashboard/dashboard";
+import ChatStack from './stacknavigator/chatStack'
+import ExploreStack from './stacknavigator/explorerStack'
+import NotificationsStack from './stacknavigator/notificationsStack'
+import MenuStack from './stacknavigator/menuStack'
+import DashboardStack from './stacknavigator/homeStack'
 import { MaterialIcons } from '@expo/vector-icons';
+import { createStackNavigator } from 'react-navigation-stack';
 
 const Tab = createBottomTabNavigator()
 
@@ -17,25 +18,25 @@ function AppNavigator(){
             tabBarShowLabel: false,
             headerShown: false,
             tabBarActiveTintColor: 'black',
-            tabBarInactiveTintColor: '#999'
+            tabBarInactiveTintColor: '#999',
         }}>
             <Tab.Screen options={{
                 tabBarIcon: ({color, size}) => (<MaterialIcons name="dashboard" color={color} size={size}/>),
-            }} name="Dashboard" component={Dashboard}/>
+            }} name="Dashboard" component={DashboardStack}/>
             <Tab.Screen name="Chat" options={{
                 tabBarBadge:6,
                 tabBarIcon: ({color, size}) => (<MaterialIcons name="chat" color={color} size={size}/>)
-            }} component={Chat}/>
+            }} component={ChatStack}/>
             <Tab.Screen name="Explore" options={{
                 tabBarIcon: ({color, size}) => (<MaterialIcons name="explore" color={color} size={size}/>)
-            }} component={Explore}/>
+            }} component={ExploreStack}/>
             <Tab.Screen name="Notifications" options={{
                 tabBarBadge: 3,
                 tabBarIcon: ({color, size}) => (<MaterialIcons name="notifications" color={color} size={size}/>)
-            }} component={Notifications}/>
+            }} component={NotificationsStack}/>
             <Tab.Screen name="Menu" options={{
                 tabBarIcon: ({color, size}) => (<MaterialIcons name="menu" color={color} size={size}/>)
-            }} component={Menu}/>
+            }} component={MenuStack}/>
         </Tab.Navigator>
     )
 }

@@ -5,8 +5,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 const androidWidth = Dimensions.get('window').width;
 const androidHeight = Dimensions.get('window').height + 70;
 export const Background = styled(Image)`
-height:22.5%;
-width: 70%;
+height:19.5%;
+width: 55%;
 margin-left:-2.15%;
 align-self: center;
 margin-top:9%;
@@ -25,14 +25,14 @@ color:black;
 font-size: 18px;
 `
 export const Inworksvg = styled(Image)`
-height:65px;
-width:65px;
+height:7%;
+width:60px;
 margin-bottom:25px;
-margin-top:18px;
+margin-top:4%;
 opacity: .85;
 `
 export const FormContainer = styled(View)`
-margin-top:40px;
+margin-top:7%;
 width:${androidWidth}px;
 align-items: center;
 `
@@ -45,7 +45,7 @@ padding-right:20px;
 width: 70%;
 height: 11%;
 margin-bottom: 3.5%;
-color:#20E15D;
+color:#333;
 `
 export const Ydha = styled(Text)` 
 color:rgb(145,145,145);

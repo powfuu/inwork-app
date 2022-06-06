@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
- import { Alert } from 'react-native'
+ import { Alert, Linking } from 'react-native'
 import * as e from './signupComponents'
 import { MainView,Inwork } from '../../defaultStyles';
 import Object from '../../resources/personal-object.png'
@@ -93,9 +93,9 @@ return(
                 placeholderTextColor="rgb(180,180,180)" onChangeText={(props)=>{
                         setBusinessName(props)
                     }} bg={IbusinessLastName} onBlur={()=>{
-                        setBusinessLastName('rgb(230,230,230)')
+                        setIbusinessLastName('rgb(230,230,230)')
                     }} onFocus={()=>{
-                        setBusinessLastName('#23ff3e')
+                        setIbusinessLastName('#23ff3e')
                     }}
                 />
              <e.FormInput placeholder="Email"

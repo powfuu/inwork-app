@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
- import { Alert } from 'react-native'
+ import { Alert,Linking } from 'react-native'
 import * as e from './signupComponents'
 import { MainView,Inwork } from '../../defaultStyles';
 import Object from '../../resources/business-object.png'
