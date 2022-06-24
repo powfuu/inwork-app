@@ -4,6 +4,7 @@ import * as e from './dashboardComponents'
 import { MainViewApp } from '../../defaultStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { HOST } from '@env'
+import Logito from '../../resources/logo-inwork.png'
 import axios from 'axios'
 
 export default function Dashboard({navigation}){
@@ -41,7 +42,7 @@ axios.post(`${HOST}/api/get-user-data`,
                     })
                 }
                 if(req.data.data.type=='business'){
-                setPreferencesPopupTitle('Based on your preferences')
+                setPreferencesPopupTitle('Recommended for you')
 axios.post(`${HOST}/api/get-preferences-dashboard`,{
                         email:req.data.data.email
                     }).then((req2)=>{
@@ -77,22 +78,20 @@ axios.post(`${HOST}/api/get-preferences-dashboard`,{
 return(
     <MainViewApp>
         <e.ScrollViewScene overScrollMode="never">
+            <e.RowLogo>
+      <e.LogoImg tintColor='dodgerblue' source={Logito}/>
   <e.PreferencesPopup>
             <e.SearchView>
-            <e.SearchIc name="search" size={23} color="#666"/>
+            <e.SearchIc name="search" size={20} color="#666"/>
             <e.PreferencesPopupTitle>{preferencesPopupTitle}</e.PreferencesPopupTitle>
             </e.SearchView>
             { data.type != '' ? data.type === 'personal' ? <e.PreferencesPopupPreferences>#{data.profession}</e.PreferencesPopupPreferences> : <e.PreferencesPopupPreferencesPopup>
- <e.PreferencesPopupDescriptionView><e.PreferencesPopupDescription>You are searching for: </e.PreferencesPopupDescription>
+ <e.PreferencesPopupDescriptionView>
  </e.PreferencesPopupDescriptionView>
-                <e.PreferencesPopupPreferencesView>
-                { prefs.searchingfor1 != null ? 
-                <e.PreferencesPopupPreferences>#{prefs.searchingfor1}</e.PreferencesPopupPreferences> : null }
-                { prefs.searchingfor2 != null ? <e.PreferencesPopupPreferences>#{prefs.searchingfor2 }</e.PreferencesPopupPreferences> : null}
-                { prefs.searchingfor3 != null ? <e.PreferencesPopupPreferences>#{prefs.searchingfor3 }</e.PreferencesPopupPreferences> : null}
-                </e.PreferencesPopupPreferencesView>
+
            </e.PreferencesPopupPreferencesPopup> : null }
         </e.PreferencesPopup>
+</e.RowLogo>
         <e.AccountsContent>
             {data.type === 'personal' ?
             business.map((usr,KEY)=>{

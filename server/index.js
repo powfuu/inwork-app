@@ -613,6 +613,7 @@ app.post('/api/remove-tag', (req,res)=>{
         $query,
         [email,id]
     )
+    res.send({rmved:"object removed[]..."})
 })
 app.post('/api/update-tags', (req,res)=>{
     let email = req.body.email;
@@ -621,7 +622,7 @@ app.post('/api/update-tags', (req,res)=>{
     $query = 'INSERT INTO skilltags(tag,type,email) VALUES(?,?,?)'
     db.query($query, [tag,type,email], (err,result)=>{
         if(result){
-            res.send({updatedTags:'{...Object Updated []}'})
+            res.send({updatedTags:result})
         }
     })
 })
@@ -831,6 +832,7 @@ app.post('/api/remove-link', (req,res)=>{
     db.query($query, [email,id], (err,result)=>{
         if(result){
         //done
+        res.send({rmved:'Link has removed from our database'})
         }
     })
 })
@@ -1020,7 +1022,7 @@ app.post('/api/get-star-state',validateToken,(req,res)=>{
     })
 })
 app.post('/api/request-match',validateToken, (req,res)=>{
-    let hrdemail = req.body.hrdemail;
+    let hrdemail = req.body .hrdemail;
     let gethrdtype;
     let type;
     let email;
@@ -1320,6 +1322,19 @@ app.post('/api/get-matches', (req,res)=>{
         })
     })
 })
+app.post('/api/get-matches-randomized', (req,res)=>{
+    jwt.verify(req.headers['authorization'], process.env.S3CRET_K3Y0, (err,usr)=>{
+        let email = usr.email;
+        $query = 'SELECT * FROM matches WHERE usr1=? OR usr2=? ORDER BY idgroup DESC'
+        db.query($query, [email, email], (err0,res0)=>{
+            if(res0.length >=1 ){
+                res.send({matches:res0})
+            }else if(res0.length === 0){
+                res.send({emptymatches:'..{Empty Object}'})
+            }
+        })
+    })
+})
 app.post('/api/remove-match', (req,res)=>{
     let idgroup = req.body.idgroup;
     $query = 'DELETE FROM matches WHERE idgroup=?'
@@ -1400,3 +1415,33 @@ app.post('/api/get-notf-chat', (req,res)=>{
     })
 })
 
+app.post('/api/add-device',(req,res)=>{
+    let deviceName = req.body.deviceName;
+    let deviceManufacture = req.body.deviceManufacture;
+    let deviceOsv = req.body.deviceOsv;
+    let email = req.body.email;
+    $query = 'INSERT INTO deviceInfo(device_name,device_manufacture,device_osv,email) VALUES(?,?,?,?)'
+    db.query($query, [deviceName, deviceManufacture, deviceOsv, email], (err,result)=>{
+        res.send({apisended:'sended_api_deviceinfo_status'})
+    })
+})
+app.post('/api/get-device',(req,res)=>{
+    jwt.verify(req.headers['authorization'], process.env.S3CRET_K3Y0, (err,user)=>{
+    let email = user.email;
+    $query = 'SELECT * FROM deviceInfo WHERE email=?'
+    db.query($query, [email], (err,result)=>{
+        if(result.length >= 1){
+            res.send({devices:result})
+        }else{ 
+            res.send({emptydevices:'empty'})
+        }
+    })
+})
+})
+app.post('/api/clear-devices', (req,res)=>{
+    let email = req.body.email;
+    $query = 'DELETE FROM deviceInfo WHERE email=?'
+    db.query($query, [email], (err,result)=>{
+    })
+    res.send({done:'done'})
+})

@@ -128,7 +128,7 @@ width: 80%;
 margin-top: 58px;
 border-radius:100px;
 padding:5px;
-color:#20E15D;
+color:dodgerblue;
 margin-left:10px;
 padding-right: 18px;
 border-color: ${props=>props.bg};
@@ -196,7 +196,7 @@ width:35px;
 border-radius: 4px;
 margin-right:8px;
 font-size:16px;
-color: #23ff3e;
+color: dodgerblue;
 border-color: ${props => props.bg};
 `
 export const Fpstep2Submit = styled(TouchableHighlight)`

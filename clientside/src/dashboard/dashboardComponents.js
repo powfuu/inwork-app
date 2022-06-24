@@ -14,10 +14,19 @@ flex-direction: column;
 align-self: center;
 border-radius: 7px;
 margin-top:6%;
-padding:8px;
-padding-top:10px;
-padding-bottom:15px;
-padding-left:5%;
+padding-top:4px;
+padding-bottom:5.5px;
+padding-left:4%;
+`
+export const RowLogo = styled(View)`
+flex-direction: row;
+`
+export const LogoImg = styled(Image)`
+height:40px;
+width:40px;
+margin-top:25px;
+margin-left:17px;
+margin-right:12px;
 `
 export const SearchView = styled(View)`
 flex-direction: row;
@@ -29,8 +38,8 @@ margin-left:-2%;
 export const PreferencesPopupTitle = styled(Text)`
 margin-top: 2.75%;
 margin-bottom:2%;
-font-weight: bold;
-font-size: 16.5px;
+font-size: 14px;
+color:rgb(100,100,100);
 margin-left:7.5px;
 `
 export const PreferencesPopupDescriptionView = styled(View)`
@@ -48,8 +57,9 @@ export const PreferencesPopupPreferencesPopup = styled(View)`
 `
 export const PreferencesPopupPreferences = styled(Text)`
 color:rgb(120,120,120);
-margin-top:.85%;
+margin-left:20px;
 font-size:12.5px;
+padding-bottom:7px;
 `
 export const AccountsContent = styled(View)`
 margin-top:6%;

@@ -25,8 +25,8 @@ margin-top:1.2%;
 export const AccountType = styled(Text)`
 align-self: flex-end;
 margin-right:10%;
-margin-top: -10px;
-color: #23ff33;
+margin-top: -5px;
+color: dodgerblue;
 `
 export const StarVal = styled(Text)`
 font-size:12px;

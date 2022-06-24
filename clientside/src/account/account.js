@@ -10,7 +10,6 @@ import non1 from '../../resources/projects.png'
 import non2 from '../../resources/notfound.png'
 import non3 from '../../resources/experience.png'
 import non4 from '../../resources/nothing-to-show.png'
-
 import {
     SkypeIndicator,
   } from 'react-native-indicators';
@@ -70,6 +69,7 @@ export default function Account({ navigation }){
 let apptoken = await AsyncStorage.getItem('@app:token')
         BackHandler.addEventListener('hardwareBackPress', (e)=>{
     navigation.getParent()?.setOptions({ tabBarStyle: { display:'flex'} })
+    return false;
         });
     axios.post(`${HOST}/api/get-user-data-hrd`,
         {
@@ -175,6 +175,7 @@ let apptoken = await AsyncStorage.getItem('@app:token')
 useEffect(()=>{ 
     accounthrd()
     navigation.getParent()?.setOptions({ tabBarStyle: { display:'none'} })
+return false;
         },[])
 
     if(statusLoader === true){

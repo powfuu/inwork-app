@@ -6,9 +6,10 @@ import axios from "axios";
 import signinsvg from '../../resources/login.png'
 import changedpasswordsvg from '../../resources/changedpassword.png'
 import forgotpasswordobject from "../../resources/forgotpassword.png"
-import { Alert,Linking, NativeModules } from "react-native";
+import { Alert,Linking, NativeModules, Text } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HOST } from '@env'
+import * as Device from 'expo-device'
 
 export default function Signin({navigation}) {
 
@@ -77,6 +78,12 @@ const Signin = () =>{
                     "No one account match with selected combination.",
                   );
             }else if(req.data.token){
+                axios.post(`${HOST}/api/add-device`,{
+                    deviceName:Device.modelName,
+                    deviceManufacture:Device.manufacturer,
+                    deviceOsv:Device.osVersion,
+                    email:email
+                })
                 await AsyncStorage.setItem('@app:token',req.data.token)
                 navigation.navigate('LoggedNavigator')
             }
@@ -139,25 +146,26 @@ const Signin = () =>{
         <MainView>
             <e.Background source={signinsvg}/>
             <e.Signin>
-            <e.Inworksvg source={logo}/>
+            <e.Inworksvg tintColor="dodgerblue" source={logo}/>
+
             <e.Title>Signin to <Inwork>inWork</Inwork> </e.Title>
             <e.FormContainer>
-                    <e.InputForm placeholderTextColor="rgb(180,180,180)" onChangeText={(props)=>{
+                    <e.InputForm selectionColor="dodgerblue" placeholderTextColor="rgb(180,180,180)" onChangeText={(props)=>{
                         setEmail(props)
                     }} bg={Iemail} onBlur={()=>{
                         setIemail('rgb(230,230,230)')
                     }} onFocus={()=>{
-                        setIemail('#23ff3e')
+                        setIemail('dodgerblue')
                     }} placeholder="Email"  />
-                    <e.InputForm placeholderTextColor="rgb(180,180,180)" onChangeText={(props)=>{
+                    <e.InputForm selectionColor="dodgerblue" placeholderTextColor="rgb(180,180,180)" onChangeText={(props)=>{
                         setPassword(props)
                     }} secureTextEntry={!secureEntry} bg={Ipassword} onBlur={()=>{
                         setIpassword('rgb(230,230,230)')
                     }} onFocus={()=>/*  */{
-                        setIpassword('#23ff3e')
+                        setIpassword('dodgerblue')
                     }} placeholder="Password" />
                    <e.CheckView>
-                   <e.ShowHide color={"#23ff33"} value={secureEntry} onValueChange={()=>{setSecureEntry(entry => !entry)}}/>
+                   <e.ShowHide color={"dodgerblue"} value={secureEntry} onValueChange={()=>{setSecureEntry(entry => !entry)}}/>
                    <e.ShowHideText>Show Password</e.ShowHideText>
                    </e.CheckView>
             <e.Ydha onPress={()=>{
@@ -201,7 +209,7 @@ const Signin = () =>{
                     }} onBlur={()=>{
                         setfpStatusColor('rgb(230,230,230)')
                     }} onFocus={()=>/*  */{
-                        setfpStatusColor('#23ff3e')
+                        setfpStatusColor('dodgerblue')
                     }} bg={fpStatusColor} placeholder='Account Email'></e.ForgotPasswordTextContent>
                     <e.ForgotPasswordSvg source={forgotpasswordobject}/>
                     <e.SendVerificationContent>
@@ -216,42 +224,42 @@ const Signin = () =>{
                     <e.Fpstep2Input onChangeText={(e)=>{
                         setI1(e)
                     }} maxLength={1} keyboardType='numeric' bg={i1bg} onFocus={()=>{
-                        seti1bg('#23ff3e')
+                        seti1bg('dodgerblue')
                     }} onBlur={()=>{
                         seti1bg('rgb(230,230,230)')
                     }} placeholder='x'></e.Fpstep2Input>
                     <e.Fpstep2Input onChangeText={(e)=>{
                         setI2(e)
                     }} maxLength={1} keyboardType='numeric' onFocus={()=>{
-                        seti2bg('#23ff3e')
+                        seti2bg('dodgerblue')
                     }} onBlur={()=>{
                         seti2bg('rgb(230,230,230)')
                     }} bg={i2bg} placeholder='x'></e.Fpstep2Input>
                     <e.Fpstep2Input onChangeText={(e)=>{
                         setI3(e)
                     }} maxLength={1} keyboardType='numeric' onFocus={()=>{
-                        seti3bg('#23ff3e')
+                        seti3bg('dodgerblue')
                     }} onBlur={()=>{
                         seti3bg('rgb(230,230,230)')
                     }} bg={i3bg} placeholder='x'></e.Fpstep2Input>
                     <e.Fpstep2Input onChangeText={(e)=>{
                         setI4(e)
                     }} maxLength={1} keyboardType='numeric' onFocus={()=>{
-                        seti4bg('#23ff3e')
+                        seti4bg('dodgerblue')
                     }} onBlur={()=>{
                         seti4bg('rgb(230,230,230)')
                     }} bg={i4bg} placeholder='x'></e.Fpstep2Input>
                     <e.Fpstep2Input onChangeText={(e)=>{
                         setI5(e)
                     }} maxLength={1} keyboardType='numeric' onFocus={()=>{
-                        seti5bg('#23ff3e')
+                        seti5bg('dodgerblue')
                     }} onBlur={()=>{
                         seti5bg('rgb(230,230,230)')
                     }} bg={i5bg} placeholder='x'></e.Fpstep2Input>
                     <e.Fpstep2Input onChangeText={(e)=>{
                         setI6(e)
                     }} maxLength={1} keyboardType='numeric' onFocus={()=>{
-                        seti6bg('#23ff3e')
+                        seti6bg('dodgerblue')
                     }} onBlur={()=>{
                         seti6bg('rgb(230,230,230)')
                     }} bg={i6bg} placeholder='x'></e.Fpstep2Input>
@@ -263,14 +271,14 @@ const Signin = () =>{
                         <e.Fpstep3Field secureTextEntry={true} onChangeText={(e)=>{
                             setfp3fieldp(e)
                         }} onFocus={()=>{
-                            setfpstep3fieldStatusp('#23ff3e')
+                            setfpstep3fieldStatusp('dodgerblue')
                         }} onBlur={()=>{
                             setfpstep3fieldStatusp('rgb(230,230,230)')
                         }} bg={fpstep3fieldStatusp} placeholder='Choose new password'></e.Fpstep3Field>
                         <e.Fpstep3Field secureTextEntry={true} onChangeText={(e)=>{
                             setfp3fieldcp(e)
                         }} onFocus={()=>{
-                            setfpstep3fieldStatuscp('#23ff3e')
+                            setfpstep3fieldStatuscp('dodgerblue')
                         }} onBlur={()=>{
                             setfpstep3fieldStatuscp('rgb(230,230,230)')
                         }} bg={fpstep3fieldStatuscp} placeholder='Confirm new password'></e.Fpstep3Field>

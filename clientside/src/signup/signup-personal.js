@@ -80,49 +80,49 @@ return(
             <e.FormObject source={Object}/>
             <e.FormTitle>Register your Account in <Inwork>inWork</Inwork></e.FormTitle>
             <e.Form>
-                <e.FormInput placeholder="Name"
+                <e.FormInput  selectionColor="dodgerblue" placeholder="Name"
                 placeholderTextColor="rgb(180,180,180)" onChangeText={(props)=>{
                         setBusinessName(props)
                     }} bg={IbusinessName} onBlur={()=>{
                         setIbusinessName('rgb(230,230,230)')
                     }} onFocus={()=>{
-                        setIbusinessName('#23ff3e')
+                        setIbusinessName('dodgerblue')
                     }}
                 />
-            <e.FormInput placeholder="Last name"
+            <e.FormInput  selectionColor="dodgerblue" placeholder="Last name"
                 placeholderTextColor="rgb(180,180,180)" onChangeText={(props)=>{
                         setBusinessName(props)
                     }} bg={IbusinessLastName} onBlur={()=>{
                         setIbusinessLastName('rgb(230,230,230)')
                     }} onFocus={()=>{
-                        setIbusinessLastName('#23ff3e')
+                        setIbusinessLastName('dodgerblue')
                     }}
                 />
-             <e.FormInput placeholder="Email"
+             <e.FormInput  selectionColor="dodgerblue" placeholder="Email"
                 placeholderTextColor="rgb(180,180,180)" onChangeText={(props)=>{
                         setEmail(props)
                     }} bg={Iemail} onBlur={()=>{
                         setIemail('rgb(230,230,230)')
                     }} onFocus={()=>{
-                        setIemail('#23ff3e')
+                        setIemail('dodgerblue')
                     }}
                 />
-                 <e.FormInput placeholder="Password" secureTextEntry={true}
+                 <e.FormInput selectionColor="dodgerblue" placeholder="Password" secureTextEntry={true}
                 placeholderTextColor="rgb(180,180,180)" onChangeText={(props)=>{
                         setPassword(props)
                     }} bg={Ipassword} onBlur={()=>{
                         setIpassword('rgb(230,230,230)')
                     }} onFocus={()=>{
-                        setIpassword('#23ff3e')
+                        setIpassword('dodgerblue')
                     }}
                 />
-                 <e.FormInput placeholder="Confirm Password" secureTextEntry={true}
+                 <e.FormInput  selectionColor="dodgerblue" placeholder="Confirm Password" secureTextEntry={true}
                 placeholderTextColor="rgb(180,180,180)" onChangeText={(props)=>{
                         setConfirmPassword(props)
                     }} bg={IconfirmPassword} onBlur={()=>{
                         setIconfirmPassword('rgb(230,230,230)')
                     }} onFocus={()=>{
-                        setIconfirmPassword('#23ff3e')
+                        setIconfirmPassword('dodgerblue')
                     }}
                 />
              <e.FormSubmit mtop="15" disabled={regStatus} onPress={signup}>

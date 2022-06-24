@@ -17,7 +17,7 @@ function AppNavigator(){
          screenOptions={{
             tabBarShowLabel: false,
             headerShown: false,
-            tabBarActiveTintColor: 'black',
+            tabBarActiveTintColor: 'dodgerblue',
             tabBarInactiveTintColor: '#999',
         }}>
             <Tab.Screen options={{
