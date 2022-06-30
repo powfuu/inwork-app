@@ -1,7 +1,52 @@
 import styled from 'styled-components';
-import { Text, View, TextInput, Image } from 'react-native'
+import { Text, View, TextInput, Image, ScrollView } from 'react-native'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 
+export const PicturesView = styled(View)` 
+    align-items:center;
+    margin-top:14px;
+    margin-bottom:-190px;
+`
+export const ScrollViewInformation = styled(ScrollView)` 
+`
+export const PicturePic = styled(Image)` 
+    border-radius:100px;
+    margin-top:-11%;
+    height: 80px;
+    width: 80px;
+`
+export const PictureBanner = styled(Image)` 
+    width:100%;
+    height: 37%;
+    margin-top:13px;
+`
+export const PicturesViewTitle = styled(Text)`
+    color: #888;
+    font-size: 15px;
+    align-self: flex-start; 
+    margin-left:13px;
+`
+export const InformationView = styled(View)`
+
+`
+export const FormView = styled(View)` 
+margin-bottom:18px;
+`
+export const InformationTitle = styled(Text)` 
+    font-size:15.5px;
+    margin-left:15px;
+`
+export const InformationInput = styled(TextInput)` 
+    border-width: 1px;
+    border-color: ${prop => prop.fg};
+    padding-top:4px; padding-bottom: 4px;
+    width:80%;
+    margin-left:15px;
+    margin-top:10px;
+    border-radius: 6px;
+    padding-left:15px;
+    padding-right:15px;
+`
 export const TitleView = styled(View)`
 flex-direction: row;
 padding-left:15.25px;
@@ -257,4 +302,45 @@ export const AddLanguageButton = styled(Text)`
     padding-left:14px;
     padding-right:14px;
 `
-
+export const EpImage = styled(Image)` 
+border-radius:6px;
+height:72px;
+width:72px;
+`
+export const EpInputTitle = styled(TextInput)` 
+margin-top:16px;
+border-bottom-width:1px;
+border-bottom-color:${props => props.fg};
+padding-bottom:5px;
+padding-left:4px;
+padding-right:4px;
+width:50%;
+text-align:center;
+font-size:17px;
+`
+export const EpInputDescription = styled(TextInput)` 
+margin-top:21px;
+border-color:${props => props.fg};
+border-width:1px;
+padding-left:14px; padding-right:14px;
+padding-bottom:6px; padding-top:11px;
+border-radius:6px;
+width:75%;
+height:70px;
+text-align-vertical:top;
+`
+export const Plus = styled(Text)` 
+color:white;
+align-self:center;
+margin-top:10px;
+font-size:23px;
+`
+export const EpRow = styled(View)`  
+flex-direction: row;
+`
+export const EpImg = styled(Image)` 
+height:60px;
+width:60px;
+border-radius: 6px;
+margin-right:14px;
+`

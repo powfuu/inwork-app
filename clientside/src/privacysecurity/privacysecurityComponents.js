@@ -15,8 +15,8 @@ font-size:18px;
 margin-left:12px;
 `
 export const DevicesView = styled(View)`
-
 `
+export const DevicesScroll = styled(ScrollView)``
 export const DevicesTitleView = styled(View)`
 flex-direction: row;
 padding-top:30px;
@@ -61,7 +61,7 @@ background-color:#000;
 width: 80%;;
 border-radius: 6px;
 align-self: center;
-margin-top:32px;
+margin-top:25px;
 padding-top:9px;
 padding-bottom:9px;
 `

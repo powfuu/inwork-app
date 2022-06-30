@@ -126,7 +126,8 @@ setDevices(devices=>[])
                 <e.DevicesTitle>Logged in registry</e.DevicesTitle>
                 <e.DevicesTitleLine></e.DevicesTitleLine>
             </e.DevicesTitleView>
-            <e.DevicesView> 
+            <e.DevicesView>
+                <e.DevicesScroll style={{height:'50%'}} overScrollMode="never">
            {devices.slice(0).reverse().map((device, KEY)=>{
                 return( 
                     <e.DeviceKeyView key={KEY}> 
@@ -141,6 +142,7 @@ setDevices(devices=>[])
                  )
             })}
                     { devices.length >= 1 ? null : <e.EmptydevicesText>Looged In Devices registry is empty.</e.EmptydevicesText> }
+            </e.DevicesScroll>
             <e.ClearDevices onPress={cleardevices}>
                 <e.ClearDevicesText>Clear devices list</e.ClearDevicesText>
             </e.ClearDevices>

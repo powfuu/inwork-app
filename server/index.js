@@ -12,7 +12,6 @@ let jwt = require('jsonwebtoken');
 let _ = require('underscore');
 let rand = Math.floor(Math.random() * 8523509);
 const { urlencoded } = require("body-parser");
-let xyz;
 require('dotenv').config()
 let transporter = nodemailer.createTransport({
     service:'gmail',
@@ -232,12 +231,15 @@ app.post('/api/change-account-password', async(req,res)=>{
 app.post('/api/get-user-data', validateToken,(req,res)=>{
         jwt.verify(req.headers['authorization'], process.env.S3CRET_K3Y0, (err,user)=>{
         if(user.type=='personal'){
+        $sql1 = 'SELECT * FROM personal_accounts WHERE email=?'
+        db.query($sql1, [user.email], (err0,res0)=>{ 
+        if(res0.length>=1){ 
            let personal_data = {
                name:user.name,
+                pic:res0[0].profile_pic_blob,
+                banner:res0[0].profile_banner_blob,
                lastname:user.lastname,
                email:user.email,
-               pic:user.pic,
-               banner:user.banner,
                type:user.type,
                profession:user.profession,
                stars:user.stars,
@@ -246,11 +248,16 @@ app.post('/api/get-user-data', validateToken,(req,res)=>{
                id:user.id
                 }
             res.send({data:personal_data})
+        }
+        })
         }else if(user.type == 'business'){
+        $sql2 = 'SELECT * FROM business_accounts WHERE email=?'
+            db.query($sql2, [user.email], (err1,res1)=>{
+            if(res1.length >= 1){
             let business_data = {
                 name:user.name,
-                pic:user.pic,
-                banner:user.banner,
+                pic: res1[0].blobimg,
+                banner: res1[0].blobimgbanner,
                 email:user.email,
                 type:user.type,
                 profession:user.profession,
@@ -260,6 +267,8 @@ app.post('/api/get-user-data', validateToken,(req,res)=>{
                 id:user.id
             }
             res.send({data:business_data})
+            }
+            })
             }          
         })
 })
@@ -277,8 +286,6 @@ app.post('/api/signin', async(req, res) => {
                         let personalName = result3[0].name;
                         let personalLastname = result3[0].lastname;
                         let personalEmail = result3[0].email;
-                        let personalPic = result3[0].profile_pic;
-                        let personalBanner = result3[0].profile_banner;
                         let profession = result3[0].profession;
                         let stars = result3[0].stars;
                         let biography = result3[0].biography;
@@ -292,9 +299,7 @@ app.post('/api/signin', async(req, res) => {
                                     if(result5.length > 0 ){ 
                                         let user = {
                                             name:personalName + ' ' +personalLastname,
-                                            pic:personalPic,
                                             email:personalEmail,
-                                            banner:personalBanner,
                                             type:type,
                                             profession:profession,
                                             stars:stars,
@@ -314,8 +319,6 @@ app.post('/api/signin', async(req, res) => {
                         if(result6.length > 0){
                             let decryptedPassword_business = result6[0].business_password;
                             let businessName = result6[0].business_name;
-                            let businessPic = result6[0].business_pic;
-                            let businessBanner = result6[0].business_banner;
                             let businessEmail = result6[0].email;
                             let businessProfession = result6[0].profession;
                             let businessStars = result6[0].stars;
@@ -329,8 +332,6 @@ app.post('/api/signin', async(req, res) => {
                                         if(result8.length > 0){
                                              let user2 = {
                                                 name:businessName,
-                                                pic:businessPic,
-                                                banner:businessBanner,
                                                 email:businessEmail,
                                                 type:type,
                                                 profession:businessProfession,
@@ -421,7 +422,6 @@ app.post('/api/update-account',validateToken, (req,res)=>{
         if(user.type == 'personal'){
             let data = {
                 name:name + ' ' +lastname,
-                pic:user.pic,
                 email:user.email,
                 banner:user.banner,
                 type:user.type,
@@ -436,7 +436,6 @@ app.post('/api/update-account',validateToken, (req,res)=>{
         }else if(user.type == 'business'){
             let data = {
                 name:businessName,
-                pic:user.pic,
                 email:user.email,
                 banner:user.banner,
                 type:user.type,
@@ -451,29 +450,29 @@ app.post('/api/update-account',validateToken, (req,res)=>{
         }    
     })
 })
-app.post('/api/update-pic', validateToken,upload.single('pic'), (req,res)=>{
-    if(req.file != undefined){
+app.post('/api/update-pic', validateToken, (req,res)=>{
     jwt.verify(req.headers['authorization'], process.env.S3CRET_K3Y0, (err,user)=>{
+        const base64 = req.body.base64;
         let $query;
-        $sql1 = 'UPDATE matchmaking SET pic=? WHERE email=?'
-        db.query($sql1, [req.file.filename,user.email])
-        $sql21 = 'UPDATE matches SET usr1pic=? WHERE usr1=?'
-        $sql22 = 'UPDATE matches SET usr2pic=? WHERE usr2=?'
-        db.query($sql21, [req.file.filename,user.email])
-        db.query($sql22, [req.file.filename,user.email])
-        $sql3 = 'UPDATE notifications SET pic=? WHERE fr0m=?'
-        db.query($sql3, [req.file.filename,user.email])
+        $sql1 = 'UPDATE matchmaking SET pic_blob=? WHERE email=?'
+        db.query($sql1, [base64,user.email])
+        $sql21 = 'UPDATE matches SET usr1pic_blob=? WHERE usr1=?'
+        $sql22 = 'UPDATE matches SET usr2pic_blob=? WHERE usr2=?'
+        db.query($sql21, [base64,user.email])
+        db.query($sql22, [base64,user.email])
+        $sql3 = 'UPDATE notifications SET pic_blob=? WHERE fr0m=?'
+        db.query($sql3, [base64,user.email])
         if(user.type=='personal'){
-            $query = 'UPDATE personal_accounts SET profile_pic=? WHERE email=?'
+            $query = 'UPDATE personal_accounts SET profile_pic_blob=? WHERE email=?'
         }else if(user.type == 'business'){
-            $query = 'UPDATE business_accounts SET business_pic=? WHERE email=?'
+            $query = 'UPDATE business_accounts SET blobimg=? WHERE email=?'
             }      
-            db.query($query, [req.file.filename, user.email], (err,result)=>{
+            db.query($query, [base64,user.email], (err,result)=>{
                 if(result){
                     if(user.type == 'personal'){
                         let data = {
                             name:user.name,
-                            pic:req.file.filename,
+                            pic:base64,
                             email:user.email,
                             banner:user.banner,
                             type:user.type,
@@ -488,7 +487,7 @@ app.post('/api/update-pic', validateToken,upload.single('pic'), (req,res)=>{
                     }else if(user.type == 'business'){
                         let data = {
                             name:user.name,
-                            pic:req.file.filename,
+                            pic:base64,
                             email:user.email,
                             banner:user.banner,
                             type:user.type,
@@ -504,29 +503,24 @@ app.post('/api/update-pic', validateToken,upload.single('pic'), (req,res)=>{
             }
             })    
         })
-    }else{
-        res.send({emptyPic:'undefined'})
-    }
 })
-app.post('/api/update-banner', validateToken,upload.single('pic'), (req,res)=>{
-    if(req.file != undefined){
+app.post('/api/update-banner', validateToken, (req,res)=>{
     jwt.verify(req.headers['authorization'], process.env.S3CRET_K3Y0, (err,user)=>{
+        const base64 = req.body.base64;
         let $query;
         $sqlmb = 'UPDATE matchmaking SET banner=? WHERE email=?'
-        db.query($sqlmb, [req.file.filename,user.email])
+        db.query($sqlmb, [base64,user.email])
         if(user.type=='personal'){
-            $query = 'UPDATE personal_accounts SET profile_banner=? WHERE email=?'
+            $query = 'UPDATE personal_accounts SET profile_banner_blob=? WHERE email=?'
         }else if(user.type == 'business'){
-            $query = 'UPDATE business_accounts SET business_banner=? WHERE email=?'
+            $query = 'UPDATE business_accounts SET blobimgbanner=? WHERE email=?'
             }      
-            db.query($query, [req.file.filename, user.email], (err,result)=>{
+            db.query($query, [base64, user.email], (err,result)=>{
                 if(result){
                     if(user.type == 'personal'){
                         let data = {
                             name:user.name,
-                            pic:user.pic,
                             email:user.email,
-                            banner:req.file.filename,
                             type:user.type,
                             profession:user.profession,
                             stars:user.stars,
@@ -539,9 +533,7 @@ app.post('/api/update-banner', validateToken,upload.single('pic'), (req,res)=>{
                     }else if(user.type == 'business'){
                         let data = {
                             name:user.name,
-                            pic:user.pic,
                             email:user.email,
-                            banner:req.file.filename,
                             type:user.type,
                             profession:user.profession,
                             stars:user.stars,
@@ -555,14 +547,17 @@ app.post('/api/update-banner', validateToken,upload.single('pic'), (req,res)=>{
             }
             })    
         })
-    }else{
-        res.send({emptyBanner:'undefined'})
-    }
 })
 app.post('/api/update-experience', (req,res)=>{
     let email = req.body.email;
     let title = req.body.experienceTitle;
     let description = req.body.experienceDescription;
+    if(title.length === 0){
+        title="Empty Title"
+    }
+    if(description.length === 0){
+        description="Empty Description"
+    }
     $query = 'INSERT INTO experience(experience_title,experience_description,email) VALUES(?,?,?)'
     db.query($query, [title,description,email], (err,result)=>{
         if(result){
@@ -576,25 +571,21 @@ app.post('/api/update-experience', (req,res)=>{
         }
     })
 })
-
-app.post('/api/update-experience-logo', upload.single('pic'),validateToken, (req,res)=>{
-    if(req.file != undefined){
-        jwt.verify(req.headers['authorization'], process.env.S3CRET_K3Y0, (err,user)=>{
-            let id;
+app.post('/api/update-experience-logo', validateToken,(req,res)=>{
+    const image = req.body.image;
+    const base64 = req.body.base64;
+      jwt.verify(req.headers['authorization'], process.env.S3CRET_K3Y0, (err,user)=>{
             $getid='SELECT id FROM experience WHERE email=? ORDER BY id DESC LIMIT 1'
             db.query($getid, [user.email], (err0,result0)=>{
                 if(result0.length === 1){
-                    let $query='UPDATE experience SET experience_logo=? WHERE email=? AND id=?'   
-                    db.query($query, [req.file.filename, user.email,result0[0].id], (err,result)=>{
+                    let $query='UPDATE experience SET experience_logo=?, blobimg=?  WHERE email=? AND id=?'   
+                    db.query($query, [image, base64, user.email,result0[0].id], (err,result)=>{
                         if(result){
-                        res.send({updatedLogo:req.file.filename})
-                             }})
+                             }else{ console.log(err) }})
                 }
             })
         })
-        }else{
-            res.send({updatedLogo:'nologo.png'})
-        }
+        res.send({oki:'oki'}) 
 })
 app.post('/api/remove-experience', (req,res)=>{
     let email = req.body.email;
@@ -714,8 +705,8 @@ app.post('/api/get-user-data-hrd', (req,res)=>{
         db.query($query, [id], (err0,result0)=>{
             if(result0.length >= 1){
                 let arr = {
-                            profile_pic:result0[0].business_pic,
-                            profile_banner:result0[0].business_banner,
+                            profile_pic_blob:result0[0].blobimg,
+                            profile_banner_blob:result0[0].blobimgbanner,
                             stars:result0[0].stars,
                             email:result0[0].email,
                             profession:result0[0].profession,
@@ -740,9 +731,7 @@ app.post('/api/update-location',validateToken,(req,res)=>{
             db.query($query, [location,user.email])
             let data = {
                 name:user.name,
-                pic:user.pic,
                 email:user.email,
-                banner:user.banner,
                 type:user.type,
                 profession:user.profession,
                 stars:user.stars,
@@ -757,9 +746,7 @@ app.post('/api/update-location',validateToken,(req,res)=>{
             db.query($query, [location,user.email])
             let data = {
                 name:user.name,
-                pic:user.pic,
                 email:user.email,
-                banner:user.banner,
                 type:user.type,
                 profession:user.profession,
                 stars:user.stars,
@@ -1080,10 +1067,10 @@ var dateTime = year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":
     })
 })
 app.post('/api/get-notf', (req,res)=>{
-    let email = req.body.email;
+let email = req.body.email;
     $get = 'SELECT * FROM notifications WHERE t0=? ORDER BY id DESC'
     db.query($get, [email], (err,res0)=>{
-        if(res0.length === 0){
+         if(res0.length === 0){
             res.send({undefinednotf:'{..[Object Undefined]}'})
         }
         if(res0.length >= 1){
